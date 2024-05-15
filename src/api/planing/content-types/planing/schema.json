@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "planings",
+  "info": {
+    "singularName": "planing",
+    "pluralName": "planings",
+    "displayName": "planing"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titre": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "jourNumero": {
+      "type": "integer"
+    },
+    "offre": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::offre.offre",
+      "inversedBy": "planings"
+    },
+    "photos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::photo.photo",
+      "mappedBy": "planing"
+    },
+    "programmes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::programme.programme",
+      "mappedBy": "planing"
+    }
+  }
+}

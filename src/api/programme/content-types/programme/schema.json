@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "programmes",
+  "info": {
+    "singularName": "programme",
+    "pluralName": "programmes",
+    "displayName": "programme"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heure": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "photos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::photo.photo",
+      "mappedBy": "programme"
+    },
+    "planing": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::planing.planing",
+      "inversedBy": "programmes"
+    }
+  }
+}

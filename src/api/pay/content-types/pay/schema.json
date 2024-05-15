@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pays",
+  "info": {
+    "singularName": "pay",
+    "pluralName": "pays",
+    "displayName": "pays",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "continent": {
+      "type": "string"
+    },
+    "reviews": {
+      "type": "integer"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "photos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::photo.photo",
+      "mappedBy": "pay"
+    },
+    "isSaved": {
+      "type": "boolean"
+    },
+    "isLiked": {
+      "type": "boolean"
+    },
+    "offres": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::offre.offre",
+      "mappedBy": "pay"
+    }
+  }
+}

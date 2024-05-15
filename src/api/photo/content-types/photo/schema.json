@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "photos",
+  "info": {
+    "singularName": "photo",
+    "pluralName": "photos",
+    "displayName": "photo",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "url": {
+      "type": "text"
+    },
+    "pay": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::pay.pay",
+      "inversedBy": "photos"
+    },
+    "planing": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::planing.planing",
+      "inversedBy": "photos"
+    },
+    "programme": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::programme.programme",
+      "inversedBy": "photos"
+    }
+  }
+}
