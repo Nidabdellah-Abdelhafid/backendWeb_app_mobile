@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reservations",
+  "info": {
+    "singularName": "reservation",
+    "pluralName": "reservations",
+    "displayName": "reservation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "destination": {
+      "type": "string"
+    },
+    "nbr_voyageurs_adultes": {
+      "type": "integer"
+    },
+    "nbr_voyageurs_enfants": {
+      "type": "integer"
+    },
+    "pourquoi_voyagez_vous": {
+      "type": "string"
+    },
+    "date_partir": {
+      "type": "date"
+    },
+    "date_fixe": {
+      "type": "boolean"
+    },
+    "duree": {
+      "type": "integer"
+    },
+    "duree_modifiable": {
+      "type": "boolean"
+    },
+    "categorie_hebergement": {
+      "type": "string"
+    },
+    "cabine": {
+      "type": "string"
+    },
+    "experience_souhaitez": {
+      "type": "string"
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "reservations"
+    },
+    "offre": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::offre.offre",
+      "inversedBy": "reservations"
+    },
+    "reference": {
+      "type": "string"
+    }
+  }
+}

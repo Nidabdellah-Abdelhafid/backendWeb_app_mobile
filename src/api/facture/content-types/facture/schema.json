@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "factures",
+  "info": {
+    "singularName": "facture",
+    "pluralName": "factures",
+    "displayName": "facture",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reference": {
+      "type": "string"
+    },
+    "prixTotal": {
+      "type": "float"
+    },
+    "reservation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::reservation.reservation"
+    },
+    "paiement": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::paiement.paiement",
+      "inversedBy": "factures"
+    }
+  }
+}

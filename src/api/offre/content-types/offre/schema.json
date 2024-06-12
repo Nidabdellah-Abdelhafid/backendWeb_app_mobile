@@ -53,6 +53,12 @@
       "relation": "oneToMany",
       "target": "api::planing.planing",
       "mappedBy": "offre"
+    },
+    "reservations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reservation.reservation",
+      "mappedBy": "offre"
     }
   }
 }

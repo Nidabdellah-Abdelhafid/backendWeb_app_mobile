@@ -47,6 +47,18 @@
       "relation": "oneToMany",
       "target": "api::offre.offre",
       "mappedBy": "pay"
+    },
+    "favories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::favorie.favorie",
+      "mappedBy": "pay"
+    },
+    "enregetrers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::enregetrer.enregetrer",
+      "mappedBy": "pay"
     }
   }
 }

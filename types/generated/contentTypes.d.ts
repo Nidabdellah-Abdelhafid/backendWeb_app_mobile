@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -726,6 +773,26 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     telephone: Attribute.BigInteger;
     image: Attribute.Media;
     pays: Attribute.String;
+    conversations: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::conversation.conversation'
+    >;
+    reservations: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::reservation.reservation'
+    >;
+    favories: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::favorie.favorie'
+    >;
+    enregetrers: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::enregetrer.enregetrer'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -736,53 +803,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -826,6 +846,215 @@ export interface ApiBadgeBadge extends Schema.CollectionType {
   };
 }
 
+export interface ApiConversationConversation extends Schema.CollectionType {
+  collectionName: 'conversations';
+  info: {
+    singularName: 'conversation';
+    pluralName: 'conversations';
+    displayName: 'Conversation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    participants: Attribute.Relation<
+      'api::conversation.conversation',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    messages: Attribute.Relation<
+      'api::conversation.conversation',
+      'oneToMany',
+      'api::message.message'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::conversation.conversation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::conversation.conversation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEnregetrerEnregetrer extends Schema.CollectionType {
+  collectionName: 'enregetrers';
+  info: {
+    singularName: 'enregetrer';
+    pluralName: 'enregetrers';
+    displayName: 'enregetrer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    titre: Attribute.String;
+    pay: Attribute.Relation<
+      'api::enregetrer.enregetrer',
+      'manyToOne',
+      'api::pay.pay'
+    >;
+    user: Attribute.Relation<
+      'api::enregetrer.enregetrer',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::enregetrer.enregetrer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::enregetrer.enregetrer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFactureFacture extends Schema.CollectionType {
+  collectionName: 'factures';
+  info: {
+    singularName: 'facture';
+    pluralName: 'factures';
+    displayName: 'facture';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    reference: Attribute.String;
+    prixTotal: Attribute.Float;
+    reservation: Attribute.Relation<
+      'api::facture.facture',
+      'oneToOne',
+      'api::reservation.reservation'
+    >;
+    paiement: Attribute.Relation<
+      'api::facture.facture',
+      'manyToOne',
+      'api::paiement.paiement'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::facture.facture',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::facture.facture',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFavorieFavorie extends Schema.CollectionType {
+  collectionName: 'favories';
+  info: {
+    singularName: 'favorie';
+    pluralName: 'favories';
+    displayName: 'favorie';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::favorie.favorie',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    pay: Attribute.Relation<
+      'api::favorie.favorie',
+      'manyToOne',
+      'api::pay.pay'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::favorie.favorie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::favorie.favorie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMessageMessage extends Schema.CollectionType {
+  collectionName: 'messages';
+  info: {
+    singularName: 'message';
+    pluralName: 'messages';
+    displayName: 'message';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Attribute.Text;
+    receiver: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    timestamp: Attribute.DateTime;
+    sender: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    conversation: Attribute.Relation<
+      'api::message.message',
+      'manyToOne',
+      'api::conversation.conversation'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::message.message',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiOffreOffre extends Schema.CollectionType {
   collectionName: 'offres';
   info: {
@@ -860,6 +1089,11 @@ export interface ApiOffreOffre extends Schema.CollectionType {
       'oneToMany',
       'api::planing.planing'
     >;
+    reservations: Attribute.Relation<
+      'api::offre.offre',
+      'oneToMany',
+      'api::reservation.reservation'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -871,6 +1105,44 @@ export interface ApiOffreOffre extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::offre.offre',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPaiementPaiement extends Schema.CollectionType {
+  collectionName: 'paiements';
+  info: {
+    singularName: 'paiement';
+    pluralName: 'paiements';
+    displayName: 'paiement';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    reference: Attribute.String;
+    typePaiement: Attribute.String;
+    date: Attribute.Date;
+    factures: Attribute.Relation<
+      'api::paiement.paiement',
+      'oneToMany',
+      'api::facture.facture'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::paiement.paiement',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::paiement.paiement',
       'oneToOne',
       'admin::user'
     > &
@@ -900,6 +1172,16 @@ export interface ApiPayPay extends Schema.CollectionType {
     isSaved: Attribute.Boolean;
     isLiked: Attribute.Boolean;
     offres: Attribute.Relation<'api::pay.pay', 'oneToMany', 'api::offre.offre'>;
+    favories: Attribute.Relation<
+      'api::pay.pay',
+      'oneToMany',
+      'api::favorie.favorie'
+    >;
+    enregetrers: Attribute.Relation<
+      'api::pay.pay',
+      'oneToMany',
+      'api::enregetrer.enregetrer'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1040,6 +1322,59 @@ export interface ApiProgrammeProgramme extends Schema.CollectionType {
   };
 }
 
+export interface ApiReservationReservation extends Schema.CollectionType {
+  collectionName: 'reservations';
+  info: {
+    singularName: 'reservation';
+    pluralName: 'reservations';
+    displayName: 'reservation';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    destination: Attribute.String;
+    nbr_voyageurs_adultes: Attribute.Integer;
+    nbr_voyageurs_enfants: Attribute.Integer;
+    pourquoi_voyagez_vous: Attribute.String;
+    date_partir: Attribute.Date;
+    date_fixe: Attribute.Boolean;
+    duree: Attribute.Integer;
+    duree_modifiable: Attribute.Boolean;
+    categorie_hebergement: Attribute.String;
+    cabine: Attribute.String;
+    experience_souhaitez: Attribute.String;
+    status: Attribute.Boolean;
+    user: Attribute.Relation<
+      'api::reservation.reservation',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    offre: Attribute.Relation<
+      'api::reservation.reservation',
+      'manyToOne',
+      'api::offre.offre'
+    >;
+    reference: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::reservation.reservation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::reservation.reservation',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiThemeTheme extends Schema.CollectionType {
   collectionName: 'themes';
   info: {
@@ -1090,16 +1425,23 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::badge.badge': ApiBadgeBadge;
+      'api::conversation.conversation': ApiConversationConversation;
+      'api::enregetrer.enregetrer': ApiEnregetrerEnregetrer;
+      'api::facture.facture': ApiFactureFacture;
+      'api::favorie.favorie': ApiFavorieFavorie;
+      'api::message.message': ApiMessageMessage;
       'api::offre.offre': ApiOffreOffre;
+      'api::paiement.paiement': ApiPaiementPaiement;
       'api::pay.pay': ApiPayPay;
       'api::photo.photo': ApiPhotoPhoto;
       'api::planing.planing': ApiPlaningPlaning;
       'api::programme.programme': ApiProgrammeProgramme;
+      'api::reservation.reservation': ApiReservationReservation;
       'api::theme.theme': ApiThemeTheme;
     }
   }

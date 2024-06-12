@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "paiements",
+  "info": {
+    "singularName": "paiement",
+    "pluralName": "paiements",
+    "displayName": "paiement",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "reference": {
+      "type": "string"
+    },
+    "typePaiement": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date"
+    },
+    "factures": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::facture.facture",
+      "mappedBy": "paiement"
+    }
+  }
+}

@@ -78,6 +78,30 @@
     },
     "pays": {
       "type": "string"
+    },
+    "conversations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::conversation.conversation",
+      "mappedBy": "participants"
+    },
+    "reservations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::reservation.reservation",
+      "mappedBy": "user"
+    },
+    "favories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::favorie.favorie",
+      "mappedBy": "user"
+    },
+    "enregetrers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::enregetrer.enregetrer",
+      "mappedBy": "user"
     }
   }
 }
