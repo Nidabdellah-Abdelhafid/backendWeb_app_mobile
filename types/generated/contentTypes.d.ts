@@ -773,11 +773,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     telephone: Attribute.BigInteger;
     image: Attribute.Media;
     pays: Attribute.String;
-    conversations: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'manyToMany',
-      'api::conversation.conversation'
-    >;
     reservations: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
@@ -839,45 +834,6 @@ export interface ApiBadgeBadge extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::badge.badge',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiConversationConversation extends Schema.CollectionType {
-  collectionName: 'conversations';
-  info: {
-    singularName: 'conversation';
-    pluralName: 'conversations';
-    displayName: 'Conversation';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    participants: Attribute.Relation<
-      'api::conversation.conversation',
-      'manyToMany',
-      'plugin::users-permissions.user'
-    >;
-    messages: Attribute.Relation<
-      'api::conversation.conversation',
-      'oneToMany',
-      'api::message.message'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::conversation.conversation',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::conversation.conversation',
       'oneToOne',
       'admin::user'
     > &
@@ -1031,11 +987,6 @@ export interface ApiMessageMessage extends Schema.CollectionType {
       'api::message.message',
       'oneToOne',
       'plugin::users-permissions.user'
-    >;
-    conversation: Attribute.Relation<
-      'api::message.message',
-      'manyToOne',
-      'api::conversation.conversation'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1430,7 +1381,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::badge.badge': ApiBadgeBadge;
-      'api::conversation.conversation': ApiConversationConversation;
       'api::enregetrer.enregetrer': ApiEnregetrerEnregetrer;
       'api::facture.facture': ApiFactureFacture;
       'api::favorie.favorie': ApiFavorieFavorie;

@@ -27,12 +27,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
-    },
-    "conversation": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::conversation.conversation",
-      "inversedBy": "messages"
     }
   }
 }

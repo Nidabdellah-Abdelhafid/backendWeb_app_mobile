@@ -79,12 +79,6 @@
     "pays": {
       "type": "string"
     },
-    "conversations": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::conversation.conversation",
-      "mappedBy": "participants"
-    },
     "reservations": {
       "type": "relation",
       "relation": "oneToMany",
