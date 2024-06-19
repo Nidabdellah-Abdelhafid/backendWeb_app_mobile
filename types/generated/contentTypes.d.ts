@@ -811,6 +811,7 @@ export interface ApiBadgeBadge extends Schema.CollectionType {
     singularName: 'badge';
     pluralName: 'badges';
     displayName: 'badge';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -834,6 +835,45 @@ export interface ApiBadgeBadge extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::badge.badge',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCarteCarte extends Schema.CollectionType {
+  collectionName: 'cartes';
+  info: {
+    singularName: 'carte';
+    pluralName: 'cartes';
+    displayName: 'carte';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    nameOncard: Attribute.String;
+    numero: Attribute.String;
+    expiryDate: Attribute.Date;
+    CVV: Attribute.BigInteger;
+    user: Attribute.Relation<
+      'api::carte.carte',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::carte.carte',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::carte.carte',
       'oneToOne',
       'admin::user'
     > &
@@ -906,6 +946,7 @@ export interface ApiFactureFacture extends Schema.CollectionType {
       'manyToOne',
       'api::paiement.paiement'
     >;
+    status: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1381,6 +1422,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::badge.badge': ApiBadgeBadge;
+      'api::carte.carte': ApiCarteCarte;
       'api::enregetrer.enregetrer': ApiEnregetrerEnregetrer;
       'api::facture.facture': ApiFactureFacture;
       'api::favorie.favorie': ApiFavorieFavorie;

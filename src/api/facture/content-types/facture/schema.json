@@ -28,6 +28,10 @@
       "relation": "manyToOne",
       "target": "api::paiement.paiement",
       "inversedBy": "factures"
+    },
+    "status": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

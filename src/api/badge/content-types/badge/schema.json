@@ -4,7 +4,8 @@
   "info": {
     "singularName": "badge",
     "pluralName": "badges",
-    "displayName": "badge"
+    "displayName": "badge",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
