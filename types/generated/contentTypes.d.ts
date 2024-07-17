@@ -1029,6 +1029,7 @@ export interface ApiMessageMessage extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    document: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
