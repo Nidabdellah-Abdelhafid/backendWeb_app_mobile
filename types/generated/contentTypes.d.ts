@@ -1350,6 +1350,7 @@ export interface ApiReservationReservation extends Schema.CollectionType {
       'api::offre.offre'
     >;
     reference: Attribute.String;
+    etat: Attribute.String & Attribute.DefaultTo<'enAttente'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
